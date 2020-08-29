@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.parameters>true</maven.compiler.parameters>
+<!--        <maven.compiler.parameters>true</maven.compiler.parameters>-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
