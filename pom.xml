@@ -63,7 +63,13 @@
 <!--                    <release>14</release>-->
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+            </plugin>
         </plugins>
+
         <pluginManagement>
             <plugins>
                 <plugin>
