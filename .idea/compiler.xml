@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="home_work_itea_07_release" target="1.5" />
+      <module name="home_work_itea_07_release" target="7" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
