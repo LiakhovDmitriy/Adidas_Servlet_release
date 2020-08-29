@@ -2,10 +2,10 @@
   <artifact type="exploded-war" name="home_work_itea_07_DAO:war exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/home_work_itea_07_DAO_war_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="home_work_itea_07_DAO/web/Web" />
+      <element id="javaee-facet-resources" facet="home_work_itea_07_release/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="home_work_itea_07_DAO" />
+          <element id="module-output" name="home_work_itea_07_release" />
         </element>
       </element>
     </root>
