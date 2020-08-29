@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="home_work_itea_07_release" target="11" />
+      <module name="home_work_itea_07_release" target="14" />
     </bytecodeTargetLevel>
   </component>
 </project>
