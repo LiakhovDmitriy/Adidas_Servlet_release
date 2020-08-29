@@ -47,9 +47,8 @@ public class GZipServletOutputStream extends ServletOutputStream {
 	}
 
 	@Override
-	public void setWriteListener (WriteListener writeListener) {
-
+	public void setWriteListener (WriteListener var1) {
 	}
 
-
 }
+
