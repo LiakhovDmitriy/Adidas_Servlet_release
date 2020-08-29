@@ -48,11 +48,11 @@
 
     <build>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>com.heroku.sdk</groupId>-->
-<!--                <artifactId>heroku-maven-plugin</artifactId>-->
-<!--                <version>3.0.3</version>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>3.0.3</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -63,14 +63,14 @@
                 </configuration>
             </plugin>
         </plugins>
-<!--        <pluginManagement>-->
-<!--            <plugins>-->
-<!--                <plugin>-->
-<!--                    <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                    <version>3.8.1</version>-->
-<!--                </plugin>-->
-<!--            </plugins>-->
-<!--        </pluginManagement>-->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>
