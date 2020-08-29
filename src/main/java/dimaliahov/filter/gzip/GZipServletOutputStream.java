@@ -40,6 +40,7 @@ public class GZipServletOutputStream extends ServletOutputStream {
 		this.gzipOutputStream.write(b);
 	}
 
+
 	@Override
 	public boolean isReady () {
 		return false;
@@ -49,4 +50,6 @@ public class GZipServletOutputStream extends ServletOutputStream {
 	public void setWriteListener (WriteListener writeListener) {
 
 	}
+
+
 }
