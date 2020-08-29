@@ -2,12 +2,9 @@
 [_**Dmitriy Liakhov**_](https://www.linkedin.com/in/dmitiy-liakhov-82388a183/)<br>
 [dimaliahov@gmail.com](mailto:dimaliahov@gmail.com)
 
-
-<h3>ITEA, Homework</h3>
-
 <ul>
     <li>
-        <a>MVC project<br></a>
+        <h3>MVC project written in servlets<br></h3>
     </li>
 </ul>
 
