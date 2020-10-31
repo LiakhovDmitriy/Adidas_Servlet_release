@@ -1,4 +1,4 @@
-package dimaliahov.MySQL;
+package dimaliahov.mySQL;
 
 import dimaliahov.model.Product;
 import dimaliahov.model.ProductIdAndCount;
@@ -29,7 +29,7 @@ public class MySQLCartDAO implements CartDAO {
 
 
 	@Override
-	public boolean addProductToCart (int userId, int productId, int count) {
+	public void addProductToCart (int userId, int productId, int count) {
 		Connection con = ms.getConnection();
 		try (PreparedStatement ps = con.prepareStatement(SET_PRODUCT_TO_CART)) {
 			ps.setString(1, String.valueOf(userId));
@@ -46,12 +46,11 @@ public class MySQLCartDAO implements CartDAO {
 				e.printStackTrace();
 			}
 		}
-		return true;
 	}
 
 
 	@Override
-	public boolean changeCountOnProduct (int userId, int productId, int count) {
+	public void changeCountOnProduct (int userId, int productId, int count) {
 		Connection con = ms.getConnection();
 		try (PreparedStatement ps = con.prepareStatement(SET_COUNT_ON_PRODUCT)) {
 			ps.setString(1, String.valueOf(count));
@@ -68,40 +67,8 @@ public class MySQLCartDAO implements CartDAO {
 				e.printStackTrace();
 			}
 		}
-		return true;
 	}
 
-
-	@Override
-	public List<Product> getProductsByUserId (int userId) {
-		List<Product> products = new ArrayList<Product>();
-
-		Connection con = ms.getConnection();
-		try (PreparedStatement ps = con.prepareStatement(GET_PRODUCTS_BY_USER_ID)) {
-			ps.setString(1, String.valueOf(userId));
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				int id = rs.getInt("productId");
-
-				DAOFactory daoFactoryProduct = DAOFactory.getInstance(1);
-				ProductDAO productDAO = daoFactoryProduct.getProductDAO();
-
-				Product product = productDAO.getProductByID(id);
-				products.add(product);
-			}
-
-			rs.close();
-		} catch (SQLException e){
-			e.printStackTrace();
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e){
-				e.printStackTrace();
-			}
-		}
-		return products;
-	}
 
 	@Override
 	public List<ProductIdAndCount> getProductsAndCount (int userId) {
@@ -133,7 +100,7 @@ public class MySQLCartDAO implements CartDAO {
 	}
 
 	@Override
-	public boolean removeProductFromCartById (int userId, int productId) {
+	public void removeProductFromCartById (int userId, int productId) {
 		Connection con = ms.getConnection();
 		try (PreparedStatement ps = con.prepareStatement(REMOVE_PRODUCT_TO_CART)) {
 			ps.setString(1, String.valueOf(userId));
@@ -148,12 +115,6 @@ public class MySQLCartDAO implements CartDAO {
 				e.printStackTrace();
 			}
 		}
-		return true;
-	}
-
-	@Override
-	public boolean removeAllProductFromUser (int userId) {
-		return false;
 	}
 
 	@Override
@@ -198,9 +159,7 @@ public class MySQLCartDAO implements CartDAO {
 			while (rs.next()) {
 				DAOFactory daoFactoryProduct = DAOFactory.getInstance(1);
 				ProductDAO productDAO = daoFactoryProduct.getProductDAO();
-
 				p = productDAO.getProductByID(rs.getInt("productId"));
-
 			}
 
 			rs.close();

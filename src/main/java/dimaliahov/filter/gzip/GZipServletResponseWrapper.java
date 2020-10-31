@@ -12,15 +12,11 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
 	private GZipServletOutputStream gzipOutputStream = null;
 	private PrintWriter printWriter = null;
 
-	public GZipServletResponseWrapper (HttpServletResponse response)
-			throws IOException {
+	public GZipServletResponseWrapper (HttpServletResponse response) {
 		super(response);
 	}
 
 	public void close () throws IOException {
-
-		//PrintWriter.close does not throw exceptions.
-		//Hence no try-catch block.
 		if (this.printWriter != null) {
 			this.printWriter.close();
 		}
@@ -60,8 +56,7 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
 	@Override
 	public ServletOutputStream getOutputStream () throws IOException {
 		if (this.printWriter != null) {
-			throw new IllegalStateException(
-					"PrintWriter obtained already - cannot get OutputStream");
+			throw new IllegalStateException("PrintWriter obtained already - cannot get OutputStream");
 		}
 		if (this.gzipOutputStream == null) {
 			this.gzipOutputStream = new GZipServletOutputStream(
@@ -87,7 +82,5 @@ public class GZipServletResponseWrapper extends HttpServletResponseWrapper {
 
 	@Override
 	public void setContentLength (int len) {
-		//ignore, since content length of zipped content
-		//does not match content length of unzipped content.
 	}
 }

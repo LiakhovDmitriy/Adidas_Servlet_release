@@ -16,6 +16,10 @@ import java.util.List;
 public class ServletHome extends HttpServlet {
 	@Override
 	protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		getMethods(req, resp);
+	}
+
+	private void getMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		RequestDispatcher rd = req.getRequestDispatcher("WEB-INF/views/index.jsp");
 
 		DAOFactory daoFactory = DAOFactory.getInstance(1);

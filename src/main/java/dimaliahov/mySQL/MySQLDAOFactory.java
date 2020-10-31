@@ -1,4 +1,4 @@
-package dimaliahov.MySQL;
+package dimaliahov.mySQL;
 
 import dimaliahov.service.DAOFactory;
 import dimaliahov.service.DAOInterfase.CartDAO;
@@ -14,11 +14,7 @@ public class MySQLDAOFactory extends DAOFactory {
 	public MySQLDAOFactory () {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		} catch (InstantiationException e){
-			e.printStackTrace();
-		} catch (IllegalAccessException e){
-			e.printStackTrace();
-		} catch (ClassNotFoundException e){
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e){
 			e.printStackTrace();
 		}
 	}

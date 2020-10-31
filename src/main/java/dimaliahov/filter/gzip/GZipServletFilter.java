@@ -31,7 +31,7 @@ public class GZipServletFilter implements Filter {
 				httpRequest.getHeader("Accept-Encoding");
 
 		return acceptEncoding != null &&
-				acceptEncoding.indexOf("gzip") != -1;
+				acceptEncoding.contains("gzip");
 
 	}
 

@@ -32,12 +32,12 @@
     <!--single-->
     <servlet>
         <servlet-name>single</servlet-name>
-        <servlet-class>dimaliahov.controller.ServletSingleProd</servlet-class>
+        <servlet-class>dimaliahov.controller.ServletSingleProduct</servlet-class>
     </servlet>
     <!--shopCart-->
     <servlet>
         <servlet-name>shopCart</servlet-name>
-        <servlet-class>dimaliahov.controller.ServletCartControl</servlet-class>
+        <servlet-class>dimaliahov.controller.ServletCart</servlet-class>
     </servlet>
 
 

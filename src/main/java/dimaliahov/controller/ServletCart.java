@@ -17,15 +17,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServletCartControl extends HttpServlet {
+public class ServletCart extends HttpServlet {
 	@Override
 	protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		getMethods(req, resp);
+	}
+
+	@Override
+	protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		postMethods(req, resp);
+	}
+
+	private void getMethods (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher rd = req.getRequestDispatcher("WEB-INF/views/shoppingCart.jsp");
 		HttpSession session = req.getSession();
 		User user;
 		user = (User) session.getAttribute("userPojo");
 
-		int userId = -1;
+		int userId;
 		userId = user.getId();
 
 		DAOFactory daoFactory = DAOFactory.getInstance(1);
@@ -34,11 +43,10 @@ public class ServletCartControl extends HttpServlet {
 
 		List<ProductIdAndCount> productCount = cartDAO.getProductsAndCount(userId);
 		List<Product> products = new ArrayList<>();
-		for (int i = 0; i < productCount.size(); i++) {
+		for (ProductIdAndCount productIdAndCount : productCount) {
 			Product p;
-			ProductIdAndCount prod = productCount.get(i);
-			p = productDAO.getProductByID(prod.getProductId());
-			p.setCount(prod.getCount());
+			p = productDAO.getProductByID(productIdAndCount.getProductId());
+			p.setCount(productIdAndCount.getCount());
 			products.add(p);
 		}
 
@@ -48,10 +56,8 @@ public class ServletCartControl extends HttpServlet {
 		rd.forward(req, resp);
 	}
 
-	@Override
-	protected void doPost (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		int userId = -1;
+	private void postMethods (HttpServletRequest req, HttpServletResponse resp)throws IOException {
+		int userId;
 		int productId = -1;
 		int count = -1;
 		String removeStr;
@@ -85,8 +91,8 @@ public class ServletCartControl extends HttpServlet {
 			if (p.getId() == 0) {
 				cartDAO.addProductToCart(userId, productId, count);
 			}
-			for (int i = 0; products.size() > i; i++) {
-				p = products.get(i);
+			for (Product product : products) {
+				p = product;
 				int id = p.getId();
 				if (productId == id) {
 					cartDAO.changeCountOnProduct(userId, productId, count);
@@ -101,5 +107,4 @@ public class ServletCartControl extends HttpServlet {
 			resp.sendRedirect("/cart");
 		}
 	}
-
 }

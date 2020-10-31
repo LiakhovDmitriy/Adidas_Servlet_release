@@ -1,14 +1,18 @@
-package dimaliahov.MySQL;
+package dimaliahov.mySQL;
 
 import dimaliahov.model.Product;
 import dimaliahov.service.DAOInterfase.ProductDAO;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLProductDAO implements ProductDAO {
-	private final static String SELECT_PRODUCT_BY_NAME = "SELECT * FROM `product` WHERE name = ?;";
+
 	private final static String SELECT_PRODUCT_BY_ID = "SELECT * FROM `product` WHERE id = ?;";
 	private final static String SET_PRODUCT = "INSERT INTO product (name, price, categoryID, rating, description, bigDescription, shortDescription, discount, photoUrlIcon, photoUrlBig1, photoUrlBig2, photoUrlBig3, photoUrlBig4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private final static String GET_PRODUCTS = "SELECT * FROM PRODUCT";
@@ -24,7 +28,6 @@ public class MySQLProductDAO implements ProductDAO {
 	@Override
 	public List<Product> getProducts () {
 		List<Product> products = new ArrayList<Product>();
-
 		Connection con = ms.getConnection();
 		try (Statement ps = con.createStatement()) {
 
@@ -47,7 +50,6 @@ public class MySQLProductDAO implements ProductDAO {
 						.setPhotoUrlBig4(rs.getString("photoUrlBig4"));
 				products.add(product);
 			}
-
 			rs.close();
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -102,36 +104,6 @@ public class MySQLProductDAO implements ProductDAO {
 	}
 
 	@Override
-	public Product getProductByName (String name) {
-		Product product = new Product();
-		product.setName(name);
-		Connection con = ms.getConnection();
-		try (PreparedStatement ps = con.prepareStatement(SELECT_PRODUCT_BY_NAME);) {
-			ps.setString(1, name);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				product.setPrice(rs.getInt("price"));
-				product.setCategoryID(rs.getInt("categoryID"));
-				product.setRating(rs.getInt("rating"));
-				product.setDescription(rs.getString("description"));
-				product.setBigDescription(rs.getString("bigDescription"));
-				product.setShortDescription(rs.getString("shortDescription"));
-				product.setDiscount(rs.getInt("discount"));
-			}
-			rs.close();
-		} catch (SQLException e){
-			e.printStackTrace();
-		} finally {
-			try {
-				con.close();
-			} catch (SQLException e){
-				e.printStackTrace();
-			}
-		}
-		return product;
-	}
-
-	@Override
 	public Product getProductByID (int id) {
 		Product product = new Product();
 		product.setId(id);
@@ -168,10 +140,9 @@ public class MySQLProductDAO implements ProductDAO {
 	}
 
 	@Override
-	public boolean setProduct (Product product) {
+	public void setProduct (Product product) {
 		Connection con = ms.getConnection();
 		try (PreparedStatement ps = con.prepareStatement(SET_PRODUCT)) {
-			System.out.println(product);
 			ps.setString(1, product.getName());
 			ps.setString(2, String.valueOf(product.getPrice()));
 			ps.setString(3, String.valueOf(product.getCategoryID()));
@@ -185,7 +156,7 @@ public class MySQLProductDAO implements ProductDAO {
 			ps.setString(11, product.getPhotoUrlBig2());
 			ps.setString(12, product.getPhotoUrlBig3());
 			ps.setString(13, product.getPhotoUrlBig4());
-			int rows = ps.executeUpdate();
+			ps.executeUpdate();
 		} catch (SQLException e){
 			e.printStackTrace();
 		} finally {
@@ -195,7 +166,6 @@ public class MySQLProductDAO implements ProductDAO {
 				e.printStackTrace();
 			}
 		}
-		return true;
 	}
 
 	public int getCountAll () {

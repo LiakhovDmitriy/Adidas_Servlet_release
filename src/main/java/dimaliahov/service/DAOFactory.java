@@ -1,6 +1,6 @@
 package dimaliahov.service;
 
-import dimaliahov.MySQL.MySQLDAOFactory;
+import dimaliahov.mySQL.MySQLDAOFactory;
 import dimaliahov.service.DAOInterfase.CartDAO;
 import dimaliahov.service.DAOInterfase.ProductDAO;
 import dimaliahov.service.DAOInterfase.UserDAO;

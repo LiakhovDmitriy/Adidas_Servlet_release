@@ -1,4 +1,4 @@
-package dimaliahov.MySQL;
+package dimaliahov.mySQL;
 
 import dimaliahov.model.User;
 import dimaliahov.service.DAOInterfase.UserDAO;
@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 public class MySQLUserDAO implements UserDAO {
 
-	private final String SELECT_NAME_USER = "SELECT NAME FROM `user` WHERE login = ? AND password = ?;";
 	private final String GET_USER = "SELECT id, name, gender, country, city, address, phone, role FROM `user` WHERE login = ? AND password = ?;";
 	private final String SET_USER = "INSERT INTO user (login, password, name, gender, country, city, address, phone, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private final String SALT = "mWeRtY!4$5^78Jbr";
@@ -23,33 +22,6 @@ public class MySQLUserDAO implements UserDAO {
 
 	public MySQLUserDAO (MySQLDAOFactory ms) {
 		this.ms = ms;
-	}
-
-	@Override
-	public String getName (String login, String password) {
-		String name = null;
-		Connection con = ms.getConnection();
-		try (PreparedStatement ps = con.prepareStatement(SELECT_NAME_USER);) {
-			ps.setString(1, login);
-			ps.setString(2, hashPass(SALT + password + SALT));
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				name = rs.getString("name");
-			}
-			rs.close();
-		} catch (SQLException e){
-			e.printStackTrace();
-		} finally {
-			try {
-				con.close();
-
-			} catch (SQLException e){
-				e.printStackTrace();
-			}
-		}
-		return name;
-
-
 	}
 
 	@Override
@@ -83,15 +55,13 @@ public class MySQLUserDAO implements UserDAO {
 				e.printStackTrace();
 			}
 		}
-
 		return user;
 	}
 
 	@Override
-	public boolean setUser (User user) {
+	public void setUser (User user) {
 		Connection con = ms.getConnection();
 		try (PreparedStatement ps = con.prepareStatement(SET_USER);) {
-			System.out.println(user);
 			ps.setString(1, user.getLogin());
 			ps.setString(2, hashPass(SALT + user.getPassword() + SALT));
 			ps.setString(3, user.getName());
@@ -101,8 +71,7 @@ public class MySQLUserDAO implements UserDAO {
 			ps.setString(7, user.getAddress());
 			ps.setString(8, user.getPhone());
 			ps.setString(9, user.getRole());
-			int rows = ps.executeUpdate();
-
+			ps.executeUpdate();
 
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -113,7 +82,6 @@ public class MySQLUserDAO implements UserDAO {
 				e.printStackTrace();
 			}
 		}
-		return true;
 	}
 
 	private String hashPass (String password) throws SQLException {

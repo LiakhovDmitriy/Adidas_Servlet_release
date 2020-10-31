@@ -10,11 +10,9 @@ public interface ProductDAO {
 
 	List<Product> getProducts ();
 
-	Product getProductByName (String name);
-
 	Product getProductByID (int id);
 
-	boolean setProduct (Product product);
+	void setProduct (Product product);
 
 	int getCountAll ();
 

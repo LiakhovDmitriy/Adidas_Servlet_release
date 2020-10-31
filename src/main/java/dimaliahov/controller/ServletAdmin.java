@@ -11,22 +11,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ServletAdmin extends HttpServlet {
+
 	@Override
 	protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("WEB-INF/views/admin.jsp");
-		rd.forward(req, resp);
+		getMethods(req, resp);
 	}
 
 	@Override
 	protected void doPost (HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+		postMethods(request, resp);
+	}
+
+	private void getMethods (HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/admin.jsp");
+		rd.forward(request, resp);
+	}
+
+	private void postMethods (HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
 
 		boolean showForm = true;
 		boolean isError = false;
 
-		List<String> error = new ArrayList();
+		ArrayList<String> error = new ArrayList<>();
 
 		String name = request.getParameter("name");
 		String price = request.getParameter("price");
@@ -35,8 +43,7 @@ public class ServletAdmin extends HttpServlet {
 		String description = request.getParameter("description");
 		String shortDescription = request.getParameter("shortDescription");
 		String discount = request.getParameter("discount");
-		System.out.println(name);
-		System.out.println(price);
+
 		if (name != null) {
 			if (name.isEmpty()) {
 				error.add("The 'name' is empty.");
@@ -62,7 +69,6 @@ public class ServletAdmin extends HttpServlet {
 				error.add("The 'shortDescription' is empty.");
 				isError = true;
 			}
-			System.out.println(isError);
 			if (!isError) {
 				Product product = new Product();
 				product.setName(name);
@@ -76,7 +82,6 @@ public class ServletAdmin extends HttpServlet {
 				DAOFactory daoFactoryProduct = DAOFactory.getInstance(1);
 				ProductDAO productDAO = daoFactoryProduct.getProductDAO();
 				productDAO.setProduct(product);
-				System.out.println(" servlet admin ");
 
 				RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/shop.jsp");
 				rd.forward(request, resp);
@@ -95,6 +100,6 @@ public class ServletAdmin extends HttpServlet {
 			request.setAttribute("ERROR", error);
 			rd.forward(request, resp);
 		}
-
 	}
+
 }

@@ -12,22 +12,30 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ServletRegistration extends HttpServlet {
 	@Override
 	protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher("WEB-INF/views/register.jsp");
-		rd.forward(req, resp);
+		getMethods(req, resp);
 	}
 
 	@Override
 	protected void doPost (HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+		postMethods(request, resp);
+
+	}
+
+	private void getMethods(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		RequestDispatcher rd = req.getRequestDispatcher("WEB-INF/views/register.jsp");
+		rd.forward(req, resp);
+	}
+
+	private void postMethods(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException{
 		boolean showForm = true;
 		boolean isError = false;
-		List<String> error = new ArrayList();
+		ArrayList<String> error = new ArrayList<>();
 		HttpSession httpSession = request.getSession();
 
 		String login = request.getParameter("login");
@@ -44,7 +52,7 @@ public class ServletRegistration extends HttpServlet {
 				error.add("The 'login' is empty.");
 				isError = true;
 			}
-			Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+			Pattern pattern = Pattern.compile("^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 			Matcher matcher = pattern.matcher(login);
 			boolean loginBol = matcher.matches();
 			if (!loginBol) {
@@ -131,6 +139,5 @@ public class ServletRegistration extends HttpServlet {
 			request.setAttribute("ERROR", error);
 			rd.forward(request, resp);
 		}
-
 	}
 }

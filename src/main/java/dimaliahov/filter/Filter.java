@@ -21,9 +21,7 @@ public class Filter implements javax.servlet.Filter {
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		HttpSession session = request.getSession();
 		if (filterConfig.getInitParameter("access").equalsIgnoreCase("true")) {
-			HttpServletRequest req = request;
-			String servletPath = req.getServletPath();
-			System.out.println(servletPath);
+			String servletPath = request.getServletPath();
 
 			String s = (String)(session.getAttribute("role"));
 
